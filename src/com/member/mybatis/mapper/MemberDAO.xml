@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.member.idao.IMemberDAO">
+	
+	<insert id="add">
+		INSERT INTO MEMBER(MID, POSITION, NAME, TEL, EMAIL)
+		VALUES(#{mid}, #{position}, #{name}, #{tel}, #{email})
+	</insert>
+	
+	<select id="list" resultType="com.member.dto.MemberDTO">
+		SELECT MID, POSITION, NAME, TEL, EMAIL
+		FROM MEMBER
+		ORDER BY NAME
+	</select>
+
+	<select id="searchMid" resultType="com.member.dto.MemberDTO">
+		SELECT MID, POSITION, NAME, TEL, EMAIL
+		FROM MEMBER
+		WHERE MID=#{mid}
+	</select>
+	
+	<select id="searchPosition" resultType="com.member.dto.MemberDTO">
+		SELECT MID, POSITION, NAME, TEL, EMAIL
+		FROM MEMBER
+		WHERE POSITION LIKE '%' || #{searchWord} || '%'
+		ORDER BY NAME
+	</select>
+
+	<select id="searchName" resultType="com.member.dto.MemberDTO">
+		SELECT MID, POSITION, NAME, TEL, EMAIL
+		FROM MEMBER
+		WHERE NAME LIKE '%' || #{searchWord} || '%'
+		ORDER BY NAME
+	</select>
+
+	<select id="searchTel" resultType="com.member.dto.MemberDTO">
+		SELECT MID, POSITION, NAME, TEL, EMAIL
+		FROM MEMBER
+		WHERE TEL LIKE '%' || #{searchWord} || '%'
+		ORDER BY NAME
+	</select>
+
+	<select id="searchEmail" resultType="com.member.dto.MemberDTO">
+		SELECT MID, POSITION, NAME, TEL, EMAIL
+		FROM MEMBER
+		WHERE EMAIL LIKE '%' || UPPER(#{searchWord}) || '%'
+		   OR EMAIL LIKE '%' || LOWER(#{searchWord}) || '%'
+		ORDER BY NAME
+	</select>
+	
+	<update id="modify">
+		UPDATE MEMBER
+		SET MID=#{mid}, POSITION=#{position}, NAME=#{name}, TEL=#{tel}, EMAIL=#{email}
+		WHERE MID=#{beforeMid}
+	</update>
+
+	<delete id="delete">
+		DELETE 
+		FROM MEMBER
+		WHERE MID=#{mid}
+	</delete>
+	
+</mapper>
